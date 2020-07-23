@@ -1,0 +1,13 @@
+version: '2'
+
+# cmd example: task VERSION=1.24.2 image
+tasks:
+  image:
+    cmds:
+      - docker build -t paveltumik/yamllint:latest -t paveltumik/yamllint:{{.VERSION}} --build-arg VERSION='{{.VERSION}}' .
+  
+  publish:
+    deps: [image]
+    cmds:
+      - docker push paveltumik/yamllint:latest
+      - docker push paveltumik/yamllint:{{.VERSION}}
